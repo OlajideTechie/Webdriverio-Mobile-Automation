@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest  # Use macOS for iOS, Ubuntu for Android or cross-platform
+    runs-on: ubuntu-latest 
 
     steps:
       - name: Checkout code
