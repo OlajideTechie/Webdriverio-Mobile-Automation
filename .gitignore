@@ -1,4 +1,5 @@
 .qodo
+.DS_Store
 node_modules
 chromedrivers
 allure-results
