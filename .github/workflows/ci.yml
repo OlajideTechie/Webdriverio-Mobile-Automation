@@ -33,8 +33,7 @@ jobs:
           npm run android  # Runs android tests
 
       - name: Upload Allure Report as an Artifact
-        uses: actions/upload-artifact@d007a2d4d02f8b0f21d65e4d29f071cd1344b115
-
+        uses: actions/upload-artifact@v3
         with:
           name: allure-report
           path: allure-report
