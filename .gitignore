@@ -1,0 +1,7 @@
+.qodo
+node_modules
+chromedrivers
+allure-results
+check_and_launch_emulator.sh
+videos
+*.sh
