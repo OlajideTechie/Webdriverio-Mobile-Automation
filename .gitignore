@@ -1,8 +1,22 @@
-.qodo
+# Mac system files
 .DS_Store
-node_modules
-chromedrivers
-allure-results
-check_and_launch_emulator.sh
-videos
+
+# Node.js dependencies
+node_modules/
+
+# ChromeDriver binaries (if you store locally)
+chromedrivers/
+
+# Shell scripts you don’t want in repo
 *.sh
+check_and_launch_emulator.sh
+
+# Allure test results and reports (generated folders)
+allure-results/
+allure-report/
+
+# Test artifacts like videos/screenshots
+videos/
+
+# Other project/system files
+.qodo
