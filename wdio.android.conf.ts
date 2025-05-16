@@ -8,8 +8,8 @@ export const config: WebdriverIO.Config = {
   capabilities: [
     {
       platformName: 'Android',
-      'appium:deviceName': 'Medium_Phone_API_36',
-      'appium:platformVersion': '16.0',
+      'appium:deviceName': 'emulator-5554',
+      'appium:platformVersion': '11.0',
       'appium:app': join(process.cwd(), './apps/android.wdio.native.app.v1.0.8.apk'),
       'appium:automationName': 'UiAutomator2',
       'appium:autoGrantPermissions': true,
