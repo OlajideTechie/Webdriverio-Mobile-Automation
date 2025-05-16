@@ -37,8 +37,9 @@ jobs:
           emulator-options: -no-window -no-audio
           script: |
             adb devices
+            adb wait-for-device
             appium &  # Start Appium server in the background
-            sleep 10  # Wait for server to stabilize
+            sleep 15  # Wait for server to stabilize
 
    - name: Run Mobile Test
      run: |
