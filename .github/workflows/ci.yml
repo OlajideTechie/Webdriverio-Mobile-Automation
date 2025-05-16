@@ -24,11 +24,23 @@ jobs:
       npm install
       npm install --save-dev @wdio/cli @wdio/appium-service appium allure-commandline
 
-   - name: Set up Appium server
-     run: |
-      appium &  # Start Appium server in the background
+   - name: Install Appium
+     run: npm install -g appium
 
-   - name: Run WebDriverIO Tests
+   - name: Set up Android SDK
+     uses: reactivecircus/android-emulator-runner@v2
+     with:
+          api-level: 30
+          target: default
+          arch: x86_64
+          force-avd-creation: true
+          emulator-options: -no-window -no-audio
+          script: |
+            adb devices
+            appium &  # Start Appium server in the background
+            sleep 10  # Wait for server to stabilize
+
+   - name: Run Mobile Test
      run: |
       npm run android  # Runs android tests
 
