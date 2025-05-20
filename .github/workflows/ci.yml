@@ -9,16 +9,27 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Appium
-        run: npm install -g appium
+      - name: Install Android cmdline-tools
+        run: |
+          mkdir -p $HOME/Android/cmdline-tools
+          cd $HOME/Android/cmdline-tools
+          curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-mac-9477386_latest.zip
+          unzip commandlinetools.zip
+          mkdir -p $HOME/Android/sdk/cmdline-tools/latest
+          mv cmdline-tools $HOME/Android/sdk/cmdline-tools/latest
+
+      - name: Set Android SDK environment variables
+        run: |
+          echo "ANDROID_SDK_ROOT=$HOME/Android/sdk" >> $GITHUB_ENV
+          echo "PATH=$HOME/Android/sdk/cmdline-tools/latest/bin:$HOME/Android/sdk/platform-tools:$PATH" >> $GITHUB_ENV
+
+      - name: Accept licenses and install SDK components
+        run: |
+          yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
+          sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-30" "system-images;android-30;google_apis;x86"
 
       - name: Create AVD
         run: |
