@@ -8,7 +8,7 @@ on:
 
 jobs:
   android-tests:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     env:
       AVD_NAME: Pixel_4_API_30
