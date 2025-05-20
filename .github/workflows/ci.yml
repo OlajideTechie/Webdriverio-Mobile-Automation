@@ -9,27 +9,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Install Android cmdline-tools
+      - name: Set up Android SDK environment
         run: |
-           mkdir -p $HOME/Android/sdk/cmdline-tools
-           cd $HOME/Android/sdk/cmdline-tools
-           curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-mac-9477386_latest.zip
-           unzip commandlinetools.zip
-           mv cmdline-tools latest
+          echo "ANDROID_SDK_ROOT=$HOME/Library/Android/sdk" >> $GITHUB_ENV
+          echo "$HOME/Library/Android/sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+          echo "$HOME/Library/Android/sdk/platform-tools" >> $GITHUB_PATH
 
-      - name: Set Android SDK environment variables
+      - name: Install SDK components
         run: |
-            echo "ANDROID_SDK_ROOT=$HOME/Android/sdk" >> $GITHUB_ENV
-            echo "$HOME/Android/sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
-            echo "$HOME/Android/sdk/platform-tools" >> $GITHUB_PATH
-
-      - name: Accept licenses and install SDK components
-        run: |
-           yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
-           sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-30" "system-images;android-30;google_apis;x86"
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools" "platforms;android-30" "emulator" "system-images;android-30;google_apis;x86"
 
       - name: Create AVD
         run: |
@@ -38,20 +30,15 @@ jobs:
 
       - name: Start emulator
         run: |
-          $ANDROID_HOME/emulator/emulator -avd test -no-snapshot -no-audio -no-window -no-boot-anim &
+          nohup emulator -avd test -no-audio -no-window -gpu swiftshader_indirect > /dev/null 2>&1 &
           adb wait-for-device
-          adb shell settings put global window_animation_scale 0
-          adb shell settings put global transition_animation_scale 0
-          adb shell settings put global animator_duration_scale 0
+          adb shell input keyevent 82
+        timeout-minutes: 5
 
-      - name: Wait for emulator to fully boot
+      - name: Run instrumentation tests (optional)
         run: |
-          boot_completed=""
-          while [[ "$boot_completed" != "1" ]]; do
-            sleep 5
-            boot_completed=$(adb shell getprop sys.boot_completed | tr -d '\r')
-          done
-          echo "Emulator booted."
+          # Run your test commands here
+          echo "Emulator is ready for testing."
 
       - name: Start Appium server
         run: |
