@@ -2,53 +2,61 @@ name: Mobile Automation CI
 
 on:
   push:
-   branches:
-    - main  # Or use the branch you're working with
+    branches:
+      - main
   pull_request:
 
 jobs:
-  build:
-   runs-on: macos-latest  # Use macOS for iOS, Ubuntu for Android or cross-platform
+  android-tests:
+    runs-on: macos-latest
 
-   steps:
-   - name: Checkout code
-     uses: actions/checkout@v2
+    env:
+      AVD_NAME: Pixel_4_API_30
+      SYSTEM_IMAGE: system-images;android-30;google_apis;x86_64
+      DEVICE_TYPE: pixel
+      ANDROID_HOME: /Users/runner/Library/Android/sdk
 
-   - name: Set up Node.js
-     uses: actions/setup-node@v3
-     with:
-      node-version: 'node'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-   - name: Install dependencies
-     run: |
-      npm install
-      npm install --save-dev @wdio/cli @wdio/appium-service appium allure-commandline
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Use specific version, not 'node'
 
-   - name: Install Appium
-     run: npm install -g appium
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm install --save-dev @wdio/cli @wdio/appium-service appium allure-commandline
+          npm install -g appium
 
-   - name: Set up Android SDK
-     uses: reactivecircus/android-emulator-runner@v2
-     with:
+      - name: Run on Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
           api-level: 30
-          target: default
+          target: google_apis
           arch: x86_64
           force-avd-creation: true
-          emulator-options: -no-window -no-audio
+          emulator-options: -no-window -no-audio -no-boot-anim
+          disable-animations: true
           script: |
-            echo "Waiting for device..."
-            adb devices
+            echo "Waiting for emulator..."
             adb wait-for-device
             adb shell getprop sys.boot_completed
-            appium &  # Start Appium server in the background
-            sleep 15  # Wait for server to stabilize
 
-   - name: Run Mobile Test
-     run: |
-      npm run android  # Runs android tests
+            echo "Starting Appium..."
+            nohup appium > appium.log 2>&1 &
+            sleep 10  # Give Appium time to fully start
 
-   - name: Upload Allure Report as an Artifact
-     uses: actions/upload-artifact@v4
-     with:
-      name: allure-report
-      path: allure-report
+            echo "Running tests..."
+            npm run android -- --no-window
+
+            echo "Generating Allure report..."
+            npx allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure Report as an Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
