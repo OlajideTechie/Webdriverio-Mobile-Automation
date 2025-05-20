@@ -20,10 +20,6 @@ jobs:
       - name: Install Appium
         run: npm install -g appium
 
-      - name: Install Appium drivers
-        run: |
-          appium driver install uiautomator2
-
       - name: Create AVD
         run: |
           echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;x86" --force
