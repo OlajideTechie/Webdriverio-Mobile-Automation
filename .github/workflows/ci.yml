@@ -14,7 +14,7 @@ jobs:
       AVD_NAME: Pixel_4_API_30
       SYSTEM_IMAGE: system-images;android-30;google_apis;x86_64
       DEVICE_TYPE: pixel
-      ANDROID_HOME: /Users/runner/Library/Android/sdk
+      ANDROID_HOME: $ANDROID_SDK_ROOT
 
     steps:
       - name: Checkout Code
