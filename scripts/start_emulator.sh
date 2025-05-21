@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EMULATOR_NAME="Medium_Phone_API_36"
+EMULATOR_NAME="nightwatch-android-11"
 
 echo "Starting emulator: $EMULATOR_NAME"
 
