@@ -8,7 +8,6 @@ node_modules/
 chromedrivers/
 
 # Shell scripts you don’t want in repo
-*.sh
 check_and_launch_emulator.sh
 
 # Allure test results and reports (generated folders)
