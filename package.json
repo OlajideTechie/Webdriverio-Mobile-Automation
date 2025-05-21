@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "android": "npx wdio run wdio.android.conf.ts --spec ./test/specs/android-test.ts && allure generate allure-results --clean && allure open",
+    "android": "npx wdio run wdio.android.conf.ts --spec ./test/specs/android-test.ts && allure generate allure-results --clean",
     "wdio": "wdio run ./wdio.conf.ts"
   },
   "keywords": [],
