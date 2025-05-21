@@ -245,12 +245,15 @@ export const config: WebdriverIO.Config = {
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
-        if (!passed) {
-            await browser.takeScreenshot();
+        afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+            try {
+            if (!passed) {
+                await browser.takeScreenshot();
+            }
+        } catch (err) {
+            console.warn('Failed to capture screenshot:', err);
         }
-    },
-
+        },
 
     /**
      * Hook that gets executed after the suite has ended

@@ -1,8 +1,8 @@
 /// <reference types="expect-webdriverio" />
 
-import HomePage from "/Users/olajideojo/Desktop/wdio-appium-ts/pageObjects/home.page";
-import loginPage from "/Users/olajideojo/Desktop/wdio-appium-ts/pageObjects/login.page";
-import successModal from "/Users/olajideojo/Desktop/wdio-appium-ts/pageObjects/successModal.page";
+import HomePage from "/Users/olajideojo/Desktop/Webdriverio-Mobile-Automation/pageObjects/home.page";
+import loginPage from "/Users/olajideojo/Desktop/Webdriverio-Mobile-Automation/pageObjects/login.page";
+import successModal from "/Users/olajideojo/Desktop/Webdriverio-Mobile-Automation/pageObjects/successModal.page";
 
 import { expect } from '@wdio/globals';
 
