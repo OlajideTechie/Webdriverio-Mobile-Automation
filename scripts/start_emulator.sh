@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EMULATOR_NAME="test_emulator"
+EMULATOR_NAME="Medium_Phone_API_36"
 
 echo "Starting emulator: $EMULATOR_NAME"
 
