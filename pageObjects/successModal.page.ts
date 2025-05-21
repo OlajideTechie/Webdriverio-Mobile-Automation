@@ -1,7 +1,7 @@
 import { $ } from '@wdio/globals';
 import type { ChainablePromiseElement } from 'webdriverio';
 
-class successModal {
+class SuccessModal {
 
     public get textElement(): ChainablePromiseElement {
         return $('id=android:id/message');
@@ -25,4 +25,4 @@ class successModal {
     }
 
 
-export default new successModal();
+export default new SuccessModal();

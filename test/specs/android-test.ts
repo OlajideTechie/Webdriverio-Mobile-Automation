@@ -1,8 +1,8 @@
 /// <reference types="expect-webdriverio" />
 
-import HomePage from "/Users/olajideojo/Desktop/Webdriverio-Mobile-Automation/pageObjects/home.page";
-import loginPage from "/Users/olajideojo/Desktop/Webdriverio-Mobile-Automation/pageObjects/login.page";
-import successModal from "/Users/olajideojo/Desktop/Webdriverio-Mobile-Automation/pageObjects/successModal.page";
+import HomePage from "../../pageObjects/home.page";
+import loginPage from "../../pageObjects/login.page";
+import successModal from "../../pageObjects/successModal.page";
 
 import { expect } from '@wdio/globals';
 
@@ -22,13 +22,11 @@ describe('Webdriverio Android Automated Test', () => {
    
    });
 
-   it.skip('login with no username and password', async () => {
-      
-      await loginPage.login('quale@qa.team', 'Qwertyu1@');
-      const successText = await successModal.getSuccessText();
-      await expect(successText).toBe('You are logged in!');
-   
-   });
+      // it.skip('login with no username and password', async () => {
+      //    await loginPage.login('', '');
+      //    const errorText = await loginPage.getErrorText(); // implement this in page object
+      //    await expect(errorText).toBe('Please enter username and password');
+      // });
 
   });
   

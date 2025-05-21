@@ -6,7 +6,7 @@ class HomePage {
     async getTitleText(): Promise<string> {
         const el = await $('android=new UiSelector().text("WEBDRIVER").className("android.widget.TextView")');
         await el.waitForExist({ timeout: 10_000 });
-        return el.getText()
+        return await el.getText()
     }
 }
 
